@@ -5,6 +5,10 @@
     box-sizing: border-box;
 }
 
+html, body {
+    overflow-x: hidden;
+}
+
 .go-to-top{
     position: sticky;
     top: 90vh;
