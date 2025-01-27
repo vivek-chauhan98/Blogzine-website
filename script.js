@@ -1,4 +1,5 @@
 const body = document.querySelector('body')
+const html = document.querySelector('html')
 const carouselContainer = document.querySelector('.carousel-container')
 const prevBtn = document.querySelector('.prev')
 const nextBtn = document.querySelector('.next')
@@ -103,8 +104,8 @@ const themeSlider = document.querySelector('.theme-slider')
 const sliderCircle = document.querySelector('.slider-circle')
 const logo = document.querySelectorAll('.logo')
 const searchIcon = document.querySelector('.search')
-const searchAndMenu = document.querySelector('.search-and-menu')
-const searchInput = document.querySelector('.search-and-menu .form input')
+const inputContainer = document.querySelector('.input-container')
+const searchInput = document.querySelector('.input-container input')
 const menu = document.querySelector('.menu')
 const sideBar = document.querySelector('.side-bar')
 const sideBarCloseBtn = document.querySelector('.side-bar .close')
@@ -116,6 +117,8 @@ const largeSizeBtn = document.querySelector('.large-size-btn')
 const listMenu = document.querySelector('.lists-menu')
 const subListItems = document.querySelector('.sub-list-items')
 const goToTopBtn = document.querySelector('.go-to-top')
+const navSectionTwo = document.querySelector('.nav-2-section')
+const disableBgEl = document.querySelector('.disable-bg')
 
 sun.addEventListener('click', () => {
     sliderCircle.classList.remove('mode-change')
@@ -140,7 +143,7 @@ themeSlider.addEventListener('click', () => {
 
 searchIcon.addEventListener('click', (e) => {
     e.stopPropagation()
-    searchAndMenu.classList.toggle('open-search-box')
+    inputContainer.classList.toggle('open')
 })
 
 searchInput.addEventListener('click', (e) => {
@@ -149,13 +152,15 @@ searchInput.addEventListener('click', (e) => {
 
 menu.addEventListener('click', (e) => {
     e.stopPropagation()
-    body.classList.add('side-bar-open')
-    sideBar.classList.toggle('open')    
+    html.classList.add('side-bar-open')
+    sideBar.classList.add('open')
+    disableBgEl.classList.add('active')
 })
 
 sideBarCloseBtn.addEventListener('click', () => {
     sideBar.classList.remove('open')
-    body.classList.remove('side-bar-open')
+    disableBgEl.classList.remove('active')
+    html.classList.remove('side-bar-open')
 })
 
 sideBar.addEventListener('click', (e) => {
@@ -195,22 +200,18 @@ largeSizeBtn.addEventListener('click', () => {
 listMenu.addEventListener('click', (e) => {
     e.stopPropagation()
     subListItems.classList.toggle('open')
+    inputContainer.classList.remove('open')
 })
 
-goToTopBtn.addEventListener('click', () => {
-    window.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: 'smooth'
-    })
-})
+
 // ***
 
 document.addEventListener('click', () => {
     editionsBox.classList.remove('open')
-    searchAndMenu.classList.remove('open-search-box')
+    inputContainer.classList.remove('open')
     sideBar.classList.remove('open')
-    body.classList.remove('side-bar-open')
+    disableBgEl.classList.remove('active')
+    html.classList.remove('side-bar-open')
     subListItems.classList.remove('open')
 })
 
@@ -219,4 +220,24 @@ document.addEventListener('click', () => {
 const moveSideBar = () => {
     const scrollPosition = window.scrollY
     sideBar.style.transform = `translateY(${scrollPosition}px)`
+
+    if(window.scrollY >= 1500) {
+        goToTopBtn.style.display = 'block'
+    } else {
+        goToTopBtn.style.display = 'none'
+    }
+
+    if(window.scrollY >= 100) {
+        navSectionTwo.classList.add('fixed-position')
+    } else {
+        navSectionTwo.classList.remove('fixed-position')
+    }
 }
+
+goToTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+    })
+})
